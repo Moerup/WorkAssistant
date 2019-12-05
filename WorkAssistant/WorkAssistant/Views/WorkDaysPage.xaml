@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WorkAssistant.Views.WorkDaysPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="ItemsListView" ItemsSource="{Binding WorkDays}" VerticalOptions="FillAndExpand" HasUnevenRows="true" 
+                  RefreshCommand="{Binding LoadWorkDaysCommand}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" 
+                  ItemSelected="OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding StartTime, StringFormat='{0:dd MMMM}'}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="20" />
+                                    <Label Text=" - Was out sick" IsVisible="{Binding Sick}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="20" />
+                                    <Label Text=" - Working from school" IsVisible="{Binding School}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="20" />
+                                    <Label Text=" - Time off work" IsVisible="{Binding TimeOff}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="20" />
+                                </StackLayout>
+                                
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
