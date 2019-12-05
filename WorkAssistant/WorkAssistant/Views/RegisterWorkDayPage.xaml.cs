@@ -18,7 +18,7 @@ namespace WorkAssistant.Views
     {
         RegisterWorkDayViewModel viewModel;
 
-        public bool SuccesfullCreated { get; set; }
+        public bool SuccessfullyCreated { get; set; }
         public AzureDataStore AzureDataStore;
 
         public RegisterWorkDayPage()
@@ -32,27 +32,13 @@ namespace WorkAssistant.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            viewModel.CheckIfStartedCommand.Execute(null);
         }
 
         async void RegisterTime_Clicked(object sender, EventArgs e)
         {
-            try
-            {
-                var newWorkDay = new WorkDay
-                {
-                    StartTime = DateTime.Now,
-                    EndTime = new DateTime(),
-                    Sick = false,
-                    School = false,
-                    TimeOff = false
-                };
-
-                SuccesfullCreated = await AzureDataStore.AddWorkDayAsync(newWorkDay);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            viewModel.CreateWorkDayCommand.Execute(null);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace WorkAssistant.Services
         public AzureDataStore()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri($"http://10.142.86.22:5000/");
+            client.BaseAddress = new Uri($"http://192.168.1.198:5000/");
 
             items = new List<WorkDay>();
         }
@@ -34,18 +34,19 @@ namespace WorkAssistant.Services
             return items;
         }
 
-        public async Task<WorkDay> GetWorkDayAsync(string id)
+        public async Task<WorkDay> GetWorkDayAsync(WorkDay item)
         {
-            if (id != null && IsConnected)
+            var parsedId = item.Id.ToString();
+            if (parsedId != null && IsConnected)
             {
-                var json = await client.GetStringAsync($"api/workday/{id}");
+                var json = await client.GetStringAsync($"api/workday/{parsedId}");
                 return await Task.Run(() => JsonConvert.DeserializeObject<WorkDay>(json));
             }
 
             return null;
         }
 
-        public async Task<bool> AddWorkDayAsync(WorkDay item)
+        public async Task<bool> CreateWorkDayAsync(WorkDay item)
         {
             if (item == null || !IsConnected)
                 return false;
@@ -66,19 +67,33 @@ namespace WorkAssistant.Services
             var buffer = Encoding.UTF8.GetBytes(serializedItem);
             var byteContent = new ByteArrayContent(buffer);
 
-            var response = await client.PutAsync(new Uri($"api/workday/{item.Id}"), byteContent);
+            var parsedId = item.Id.ToString();
+            var response = await client.PutAsync(new Uri($"api/workday/{parsedId}"), byteContent);
 
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteWorkDayAsync(string id)
+        public async Task<bool> DeleteWorkDayAsync(WorkDay item)
         {
-            if (string.IsNullOrEmpty(id) && !IsConnected)
+            var parsedId = item.Id.ToString();
+            if (string.IsNullOrEmpty(parsedId) && !IsConnected)
                 return false;
 
-            var response = await client.DeleteAsync($"api/workday/{id}");
+            var response = await client.DeleteAsync($"api/workday/{parsedId}");
 
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> CheckIfWorkDayIsStarted()
+        {
+            var response = await client.GetAsync($"api/workday/currentday");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            
+            return false;
         }
     }
 }

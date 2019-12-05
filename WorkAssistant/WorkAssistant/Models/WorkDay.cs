@@ -2,12 +2,14 @@
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
+using WorkAssistant.Helpers;
 
 namespace WorkAssistant.Models
 {
     public class WorkDay
     {
         [BsonId]
+        [JsonConverter(typeof(ObjectIdConverter))]
         public ObjectId Id { get; set; }
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,15 +13,88 @@ namespace WorkAssistant.ViewModels
 {
     public class RegisterWorkDayViewModel : BaseViewModel
     {
-        public bool SuccesfullCreated { get; set; }
+        bool alreadyStarted { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public bool SuccessfullyCreated { get; private set; }
+        public bool AlreadyStarted
+        {
+            get { return alreadyStarted; }
+            set
+            {
+                if (alreadyStarted != value)
+                {
+                    alreadyStarted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AlreadyStarted"));
+                } 
+            }
+        }
         public DateTime MyDate { get; set; }
-        public Command RegisterTimeCommand { get; set; }
+        public Command CheckIfStartedCommand { get; set; }
+        public Command CreateWorkDayCommand { get; set; }
+        
+
+        public AzureDataStore AzureDataStore;
 
         public RegisterWorkDayViewModel()
         {
             Title = "New WorkDay";
             MyDate = new DateTime();
             MyDate = DateTime.Now;
+            AzureDataStore = new AzureDataStore();
+            CheckIfStartedCommand = new Command(async () => await ExecuteCheckIfStartedCommand());
+            CreateWorkDayCommand = new Command(async () => await ExecuteCreateWorkDayCommand());
+        }
+
+        async Task ExecuteCheckIfStartedCommand()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                AlreadyStarted = await AzureDataStore.CheckIfWorkDayIsStarted();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        async Task ExecuteCreateWorkDayCommand()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                var newWorkDay = new WorkDay
+                {
+                    Id = ObjectId.GenerateNewId(),
+                    StartTime = DateTime.Now,
+                    EndTime = new DateTime(),
+                    Sick = false,
+                    School = false,
+                    TimeOff = false
+                };
+
+                SuccessfullyCreated = await AzureDataStore.CreateWorkDayAsync(newWorkDay);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }
