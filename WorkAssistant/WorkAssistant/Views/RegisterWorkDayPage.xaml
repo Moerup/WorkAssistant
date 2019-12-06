@@ -6,10 +6,22 @@
              xmlns:Helpers="clr-namespace:WorkAssistant.Helpers"
              mc:Ignorable="d"
              x:Class="WorkAssistant.Views.RegisterWorkDayPage" Title="{Binding MyDate, StringFormat='{0:dd MMMM}'}" >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh" Clicked="Refresh_Clicked" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
+        
         <StackLayout>
-            <Label Text="{Binding alreadyStarted}" />
-            <Button IsVisible="{Binding alreadyStarted, Converter={Helpers:InverseBoolConverter}}" Text="Start Work" TextColor="White" Clicked="RegisterTime_Clicked" BackgroundColor="#2196F3" WidthRequest="200" HeightRequest="200" CornerRadius="100" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  />
+            <Label Text="{Binding AlreadyStarted}" />
+            <Button IsVisible="{Binding AlreadyStarted, Converter={Helpers:InverseBoolConverter}}" 
+                    Text="Start Work" TextColor="White" Clicked="RegisterTime_Clicked" BackgroundColor="#2196F3" 
+                    WidthRequest="200" HeightRequest="200" CornerRadius="100" VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"  />
+            <Button IsVisible="{Binding AlreadyStarted}" 
+                    Text="End Work" TextColor="White" Clicked="RegisterEndTime_Clicked" BackgroundColor="#60cf11" 
+                    WidthRequest="200" HeightRequest="200" CornerRadius="100" VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"  />
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

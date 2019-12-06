@@ -13,7 +13,8 @@ namespace WorkAssistant.ViewModels
 {
     public class RegisterWorkDayViewModel : BaseViewModel
     {
-        bool alreadyStarted { get; set; }
+        bool alreadyStarted;
+        public WorkDay CurrentWorkDay { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public bool SuccessfullyCreated { get; private set; }
         public bool AlreadyStarted
@@ -24,13 +25,14 @@ namespace WorkAssistant.ViewModels
                 if (alreadyStarted != value)
                 {
                     alreadyStarted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AlreadyStarted"));
+                    OnPropertyChanged();
                 } 
             }
         }
         public DateTime MyDate { get; set; }
         public Command CheckIfStartedCommand { get; set; }
         public Command CreateWorkDayCommand { get; set; }
+        public Command UpdateWorkDayCommand { get; set; }
         
 
         public AzureDataStore AzureDataStore;
@@ -43,6 +45,7 @@ namespace WorkAssistant.ViewModels
             AzureDataStore = new AzureDataStore();
             CheckIfStartedCommand = new Command(async () => await ExecuteCheckIfStartedCommand());
             CreateWorkDayCommand = new Command(async () => await ExecuteCreateWorkDayCommand());
+            UpdateWorkDayCommand = new Command(async () => await ExecuteUpdateWorkDayCommand());
         }
 
         async Task ExecuteCheckIfStartedCommand()
@@ -54,7 +57,18 @@ namespace WorkAssistant.ViewModels
 
             try
             {
-                AlreadyStarted = await AzureDataStore.CheckIfWorkDayIsStarted();
+                CurrentWorkDay = new WorkDay();
+                CurrentWorkDay = await AzureDataStore.CheckIfWorkDayIsStarted();
+                var emptyId = new ObjectId();
+                if (CurrentWorkDay.Id != emptyId)
+                {
+                    AlreadyStarted = true;
+                }
+                else
+                {
+                    AlreadyStarted = false;
+                }
+                
             }
             catch (Exception ex)
             {
@@ -86,6 +100,27 @@ namespace WorkAssistant.ViewModels
                 };
 
                 SuccessfullyCreated = await AzureDataStore.CreateWorkDayAsync(newWorkDay);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        async Task ExecuteUpdateWorkDayCommand()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                SuccessfullyCreated = await AzureDataStore.UpdateWorkDayAsync(CurrentWorkDay);
             }
             catch (Exception ex)
             {

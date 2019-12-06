@@ -40,5 +40,15 @@ namespace WorkAssistant.Views
         {
             viewModel.CreateWorkDayCommand.Execute(null);
         }
+
+        async void RegisterEndTime_Clicked(object sender, EventArgs e)
+        {
+            viewModel.CreateWorkDayCommand.Execute(null);
+        }
+        
+        async void Refresh_Clicked(object sender, EventArgs e)
+        {
+            viewModel.CheckIfStartedCommand.Execute(null);
+        }
     }
 }

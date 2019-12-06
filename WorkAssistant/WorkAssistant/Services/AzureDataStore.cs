@@ -17,7 +17,7 @@ namespace WorkAssistant.Services
         public AzureDataStore()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri($"http://192.168.1.198:5000/");
+            client.BaseAddress = new Uri($"http://10.142.86.22:5000/");
 
             items = new List<WorkDay>();
         }
@@ -84,16 +84,19 @@ namespace WorkAssistant.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> CheckIfWorkDayIsStarted()
+        public async Task<WorkDay> CheckIfWorkDayIsStarted()
         {
             var response = await client.GetAsync($"api/workday/currentday");
+            var responseConent = await response.Content.ReadAsStringAsync();
+            var workDay = JsonConvert.DeserializeObject<WorkDay>(responseConent);
 
             if (response.IsSuccessStatusCode)
             {
-                return true;
+                return workDay;
             }
-            
-            return false;
+
+            var emptyWorkDay = new WorkDay();
+            return emptyWorkDay;
         }
     }
 }
