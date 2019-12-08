@@ -28,5 +28,8 @@ namespace WorkAssistant.Models
 
         [JsonProperty(PropertyName = "timeOff")]
         public bool TimeOff { get; set; }
+
+        [JsonProperty(PropertyName = "onCall")]
+        public bool OnCall { get; set; }
     }
 }

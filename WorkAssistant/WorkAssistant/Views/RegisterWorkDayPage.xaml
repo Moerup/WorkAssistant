@@ -5,23 +5,130 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:Helpers="clr-namespace:WorkAssistant.Helpers"
              mc:Ignorable="d"
-             x:Class="WorkAssistant.Views.RegisterWorkDayPage" Title="{Binding MyDate, StringFormat='{0:dd MMMM}'}" >
+             x:Class="WorkAssistant.Views.RegisterWorkDayPage" Title="Register Work Day" >
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Refresh" Clicked="Refresh_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        
         <StackLayout>
-            <Label Text="{Binding AlreadyStarted}" />
-            <Button IsVisible="{Binding AlreadyStarted, Converter={Helpers:InverseBoolConverter}}" 
-                    Text="Start Work" TextColor="White" Clicked="RegisterTime_Clicked" BackgroundColor="#2196F3" 
-                    WidthRequest="200" HeightRequest="200" CornerRadius="100" VerticalOptions="CenterAndExpand" 
-                    HorizontalOptions="CenterAndExpand"  />
-            <Button IsVisible="{Binding AlreadyStarted}" 
-                    Text="End Work" TextColor="White" Clicked="RegisterEndTime_Clicked" BackgroundColor="#60cf11" 
-                    WidthRequest="200" HeightRequest="200" CornerRadius="100" VerticalOptions="CenterAndExpand" 
-                    HorizontalOptions="CenterAndExpand"  />
+            <Frame CornerRadius="10"  
+                   OutlineColor="Black" 
+                   Padding="5"
+                   Margin="5">
+                <StackLayout>
+                    <Label Text="Start Date &amp; Time:"
+                           FontSize="Large"
+                           FontAttributes="Bold"
+                           TextColor="Black"
+                           HorizontalOptions="Center"/>
+
+                    <DatePicker x:Name="startDatePicker"
+                                Format="D"
+                                Margin="0, 0, 0, 0"
+                                DateSelected="OnStartDateSelected_DateSelected" />
+
+                    <StackLayout Orientation="Horizontal">
+                        <TimePicker x:Name="startTimePicker"
+                                    Time="11:00:00"
+                                    Format="T"
+                                    HorizontalOptions="FillAndExpand"
+                                    PropertyChanged="OnStartTimePicker_PropertyChanged" />
+
+                        <Button Text="Now" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <Frame CornerRadius="10"  
+                   OutlineColor="Black" 
+                   Padding="5"
+                   Margin="5">
+                <StackLayout>
+                    <Label Text="End Date &amp; Time:"
+                           FontSize="Large"
+                           FontAttributes="Bold"
+                           TextColor="Black"
+                           HorizontalOptions="Center"/>
+
+                    <DatePicker x:Name="endDatePicker"
+                                MinimumDate="{Binding Source={x:Reference startDatePicker},Path=Date}"
+                                Format="D"
+                                Margin="0, 0, 0, 0"
+                                DateSelected="OnEndDateSelected_DateSelected" />
+
+                    <StackLayout Orientation="Horizontal">
+                        <TimePicker x:Name="endTimePicker"
+                                    Time="11:00:00"
+                                    Format="T"
+                                    HorizontalOptions="FillAndExpand"                           
+                                    PropertyChanged="OnEndTimePicker_PropertyChanged" />
+                        
+                        <Button Text="Now" 
+                                Padding="0"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!--<Frame CornerRadius="10"  
+                   OutlineColor="Black" 
+                   Padding="5"
+                   Margin="5">
+                <StackLayout>
+                    <Label Text="Break Time:"
+                           FontSize="Large"
+                           FontAttributes="Bold"
+                           TextColor="Black"
+                           HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>-->
+
+            <Frame CornerRadius="10"  
+                   OutlineColor="Black" 
+                   Padding="5"
+                   Margin="5">
+                <Grid HorizontalOptions="CenterAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*" />
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="10*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Sick"
+                           VerticalOptions="Center"/>
+                    <CheckBox x:Name="Sick"
+                              Grid.Column="1"
+                              VerticalOptions="Center"/>
+
+                    <Label Text="School"
+                           Grid.Column="3"
+                           VerticalOptions="Center"/>
+                    <CheckBox x:Name="School" 
+                              Grid.Column="4"
+                              VerticalOptions="Center"/>
+
+                    <Label Text="Time Off"
+                           Grid.Row="1" 
+                           VerticalOptions="Center"/>
+                    <CheckBox x:Name="TimeOff" 
+                              Grid.Row="1"
+                              Grid.Column="1"
+                              VerticalOptions="Center"/>
+
+                    <Label Text="Called In"
+                           Grid.Column="3"
+                           Grid.Row="1" 
+                           VerticalOptions="Center"/>
+                    <CheckBox x:Name="CalledIn"
+                              Grid.Column="4"
+                              Grid.Row="1"
+                              VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
         </StackLayout>
-        
     </ContentPage.Content>
 </ContentPage>

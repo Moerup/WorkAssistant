@@ -15,7 +15,6 @@ namespace WorkAssistant.ViewModels
     {
         bool alreadyStarted;
         public WorkDay CurrentWorkDay { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
         public bool SuccessfullyCreated { get; private set; }
         public bool AlreadyStarted
         {

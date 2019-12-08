@@ -17,7 +17,7 @@ namespace WorkAssistant.Services
         public AzureDataStore()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri($"http://10.142.86.22:5000/");
+            client.BaseAddress = new Uri($"http://192.168.1.198:5000/");
 
             items = new List<WorkDay>();
         }

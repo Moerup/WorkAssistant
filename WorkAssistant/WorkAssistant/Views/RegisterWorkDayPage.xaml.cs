@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -36,19 +37,39 @@ namespace WorkAssistant.Views
             viewModel.CheckIfStartedCommand.Execute(null);
         }
 
-        async void RegisterTime_Clicked(object sender, EventArgs e)
-        {
-            viewModel.CreateWorkDayCommand.Execute(null);
-        }
+        //async void RegisterTime_Clicked(object sender, EventArgs e)
+        //{
+        //    viewModel.CreateWorkDayCommand.Execute(null);
+        //}
 
-        async void RegisterEndTime_Clicked(object sender, EventArgs e)
-        {
-            viewModel.CreateWorkDayCommand.Execute(null);
-        }
+        //async void RegisterEndTime_Clicked(object sender, EventArgs e)
+        //{
+        //    viewModel.CreateWorkDayCommand.Execute(null);
+        //}
         
         async void Refresh_Clicked(object sender, EventArgs e)
         {
             viewModel.CheckIfStartedCommand.Execute(null);
+        }
+
+        private void OnStartDateSelected_DateSelected(object sender, DateChangedEventArgs e)
+        {
+
+        }
+
+        private void OnEndDateSelected_DateSelected(object sender, DateChangedEventArgs e)
+        {
+
+        }
+
+        private void OnStartTimePicker_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+
+        }
+
+        private void OnEndTimePicker_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+
         }
     }
 }
