@@ -2,6 +2,8 @@
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WorkAssistant.Helpers;
 
 namespace WorkAssistant.Models

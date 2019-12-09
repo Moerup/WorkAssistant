@@ -33,8 +33,11 @@ namespace WorkAssistant.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+        }
 
-            viewModel.CheckIfStartedCommand.Execute(null);
+        protected virtual void OnModelChanged()
+        {
+
         }
 
         //async void RegisterTime_Clicked(object sender, EventArgs e)
@@ -49,7 +52,17 @@ namespace WorkAssistant.Views
         
         async void Refresh_Clicked(object sender, EventArgs e)
         {
-            viewModel.CheckIfStartedCommand.Execute(null);
+
+        }
+
+        async void EndTimeNowButton_Clicked(object sender, EventArgs e)
+        {
+            MessagingCenter.Send(this, "EndTimeNowButtonClicked");
+        }
+
+        async void StartTimeNowButton_Clicked(object sender, EventArgs e)
+        {
+            MessagingCenter.Send(this, "StartTimeNowButtonClicked");
         }
 
         private void OnStartDateSelected_DateSelected(object sender, DateChangedEventArgs e)
@@ -64,7 +77,7 @@ namespace WorkAssistant.Views
 
         private void OnStartTimePicker_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
+            
         }
 
         private void OnEndTimePicker_PropertyChanged(object sender, PropertyChangedEventArgs e)

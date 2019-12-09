@@ -7,128 +7,137 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkAssistant.Models;
 using WorkAssistant.Services;
+using WorkAssistant.Views;
 using Xamarin.Forms;
 
 namespace WorkAssistant.ViewModels
 {
     public class RegisterWorkDayViewModel : BaseViewModel
     {
-        bool alreadyStarted;
-        public WorkDay CurrentWorkDay { get; set; }
-        public bool SuccessfullyCreated { get; private set; }
-        public bool AlreadyStarted
+        public WorkDay WorkDay { get; set; }
+
+        #region Properties Get/Setters
+
+        public DateTime StartTime
         {
-            get { return alreadyStarted; }
+            get { return WorkDay.StartTime; }
             set
             {
-                if (alreadyStarted != value)
+                if (WorkDay.StartTime != value)
                 {
-                    alreadyStarted = value;
+                    WorkDay.StartTime = value;
                     OnPropertyChanged();
-                } 
+                }
             }
         }
-        public DateTime MyDate { get; set; }
+
+        public DateTime EndTime
+        {
+            get { return WorkDay.EndTime; }
+            set
+            {
+                if (WorkDay.EndTime != value)
+                {
+                    WorkDay.EndTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool School
+        {
+            get { return WorkDay.School; }
+            set
+            {
+                if (WorkDay.School != value)
+                {
+                    WorkDay.School = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool Sick
+        {
+            get { return WorkDay.Sick; }
+            set
+            {
+                if (WorkDay.Sick != value)
+                {
+                    WorkDay.Sick = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool TimeOff
+        {
+            get { return WorkDay.TimeOff; }
+            set
+            {
+                if (WorkDay.TimeOff != value)
+                {
+                    WorkDay.TimeOff = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool OnCall
+        {
+            get { return WorkDay.OnCall; }
+            set
+            {
+                if (WorkDay.OnCall != value)
+                {
+                    WorkDay.OnCall = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        DateTime _currentDate;
+        public DateTime CurrentDate
+        {
+            get { return _currentDate; }
+            set
+            {
+                if (_currentDate != value)
+                {
+                    _currentDate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
         public Command CheckIfStartedCommand { get; set; }
         public Command CreateWorkDayCommand { get; set; }
         public Command UpdateWorkDayCommand { get; set; }
-        
 
         public AzureDataStore AzureDataStore;
 
         public RegisterWorkDayViewModel()
         {
             Title = "New WorkDay";
-            MyDate = new DateTime();
-            MyDate = DateTime.Now;
+            WorkDay = new WorkDay();
+            _currentDate = new DateTime();
+            _currentDate = DateTime.Now;
             AzureDataStore = new AzureDataStore();
-            CheckIfStartedCommand = new Command(async () => await ExecuteCheckIfStartedCommand());
-            CreateWorkDayCommand = new Command(async () => await ExecuteCreateWorkDayCommand());
-            UpdateWorkDayCommand = new Command(async () => await ExecuteUpdateWorkDayCommand());
-        }
+            //CheckIfStartedCommand = new Command(async () => await ExecuteCheckIfStartedCommand());
+            //CreateWorkDayCommand = new Command(async () => await ExecuteCreateWorkDayCommand());
+            //UpdateWorkDayCommand = new Command(async () => await ExecuteUpdateWorkDayCommand());
 
-        async Task ExecuteCheckIfStartedCommand()
-        {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
-
-            try
+            MessagingCenter.Subscribe<RegisterWorkDayPage>(this, "StartTimeNowButtonClicked", (sender) =>
             {
-                CurrentWorkDay = new WorkDay();
-                CurrentWorkDay = await AzureDataStore.CheckIfWorkDayIsStarted();
-                var emptyId = new ObjectId();
-                if (CurrentWorkDay.Id != emptyId)
-                {
-                    AlreadyStarted = true;
-                }
-                else
-                {
-                    AlreadyStarted = false;
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
+                StartTime = DateTime.Now;
+            });
 
-        async Task ExecuteCreateWorkDayCommand()
-        {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
-
-            try
+            MessagingCenter.Subscribe<RegisterWorkDayPage>(this, "EndTimeNowButtonClicked", (sender) =>
             {
-                var newWorkDay = new WorkDay
-                {
-                    Id = ObjectId.GenerateNewId(),
-                    StartTime = DateTime.Now,
-                    EndTime = new DateTime(),
-                    Sick = false,
-                    School = false,
-                    TimeOff = false
-                };
-
-                SuccessfullyCreated = await AzureDataStore.CreateWorkDayAsync(newWorkDay);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
-
-        async Task ExecuteUpdateWorkDayCommand()
-        {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
-
-            try
-            {
-                SuccessfullyCreated = await AzureDataStore.UpdateWorkDayAsync(CurrentWorkDay);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+                EndTime = DateTime.Now;
+            });
         }
     }
 }

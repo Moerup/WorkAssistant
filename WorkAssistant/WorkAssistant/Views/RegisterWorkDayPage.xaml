@@ -23,18 +23,21 @@
                            HorizontalOptions="Center"/>
 
                     <DatePicker x:Name="startDatePicker"
+                                Date="{Binding CurrentDate}"
                                 Format="D"
                                 Margin="0, 0, 0, 0"
                                 DateSelected="OnStartDateSelected_DateSelected" />
 
                     <StackLayout Orientation="Horizontal">
                         <TimePicker x:Name="startTimePicker"
-                                    Time="11:00:00"
-                                    Format="T"
-                                    HorizontalOptions="FillAndExpand"
-                                    PropertyChanged="OnStartTimePicker_PropertyChanged" />
+                                    Time="{Binding StartTime, Converter={Helpers:DateTimeToTimeSpanConverter}}"
+                                    Format="HH:mm"
+                                    HorizontalOptions="FillAndExpand" 
+                                    PropertyChanged="OnStartTimePicker_PropertyChanged"/>
 
-                        <Button Text="Now" />
+                        <Button x:Name="currentStartTimeButton" 
+                                Clicked="StartTimeNowButton_Clicked"
+                                Text="Now" />
                     </StackLayout>
                 </StackLayout>
             </Frame>
@@ -58,29 +61,17 @@
 
                     <StackLayout Orientation="Horizontal">
                         <TimePicker x:Name="endTimePicker"
-                                    Time="11:00:00"
-                                    Format="T"
-                                    HorizontalOptions="FillAndExpand"                           
-                                    PropertyChanged="OnEndTimePicker_PropertyChanged" />
-                        
-                        <Button Text="Now" 
-                                Padding="0"/>
+                                    Time="{Binding EndTime, Converter={Helpers:DateTimeToTimeSpanConverter}}"
+                                    Format="HH:mm"
+                                    HorizontalOptions="FillAndExpand" 
+                                    PropertyChanged="OnEndTimePicker_PropertyChanged"/>
+
+                        <Button x:Name="currentEndTimeButton"
+                                Clicked="EndTimeNowButton_Clicked"
+                                Text="Now" />
                     </StackLayout>
                 </StackLayout>
             </Frame>
-
-            <!--<Frame CornerRadius="10"  
-                   OutlineColor="Black" 
-                   Padding="5"
-                   Margin="5">
-                <StackLayout>
-                    <Label Text="Break Time:"
-                           FontSize="Large"
-                           FontAttributes="Bold"
-                           TextColor="Black"
-                           HorizontalOptions="Center"/>
-                </StackLayout>
-            </Frame>-->
 
             <Frame CornerRadius="10"  
                    OutlineColor="Black" 
@@ -101,13 +92,15 @@
                     <Label Text="Sick"
                            VerticalOptions="Center"/>
                     <CheckBox x:Name="Sick"
+                              IsChecked="{Binding Sick}"
                               Grid.Column="1"
                               VerticalOptions="Center"/>
 
                     <Label Text="School"
                            Grid.Column="3"
                            VerticalOptions="Center"/>
-                    <CheckBox x:Name="School" 
+                    <CheckBox x:Name="School"
+                              IsChecked="{Binding School}"
                               Grid.Column="4"
                               VerticalOptions="Center"/>
 
@@ -115,6 +108,7 @@
                            Grid.Row="1" 
                            VerticalOptions="Center"/>
                     <CheckBox x:Name="TimeOff" 
+                              IsChecked="{Binding TimeOff}"
                               Grid.Row="1"
                               Grid.Column="1"
                               VerticalOptions="Center"/>
@@ -124,6 +118,7 @@
                            Grid.Row="1" 
                            VerticalOptions="Center"/>
                     <CheckBox x:Name="CalledIn"
+                              IsChecked="{Binding OnCall}"
                               Grid.Column="4"
                               Grid.Row="1"
                               VerticalOptions="Center"/>
