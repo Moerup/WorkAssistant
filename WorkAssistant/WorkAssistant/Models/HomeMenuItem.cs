@@ -7,7 +7,8 @@ namespace WorkAssistant.Models
     public enum MenuItemType
     {
         Start,
-        Workdays
+        Workdays,
+        Filter
     }
     public class HomeMenuItem
     {

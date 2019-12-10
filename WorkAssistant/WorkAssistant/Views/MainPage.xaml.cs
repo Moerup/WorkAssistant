@@ -33,6 +33,9 @@ namespace WorkAssistant.Views
                     case (int)MenuItemType.Start:
                         MenuPages.Add(id, new NavigationPage(new RegisterWorkDayPage()));
                         break;
+                    case (int)MenuItemType.Filter:
+                        MenuPages.Add(id, new NavigationPage(new SearchWorkDaysPage()));
+                        break;
                     case (int)MenuItemType.Workdays:
                         MenuPages.Add(id, new NavigationPage(new WorkDaysPage()));
                         break;

@@ -18,6 +18,7 @@ namespace WorkAssistant.Views
             menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.Start, Title="Start" },
+                new HomeMenuItem {Id = MenuItemType.Filter, Title="Filter & Stats" },
                 new HomeMenuItem {Id = MenuItemType.Workdays, Title="All Workdays" }
             };
 

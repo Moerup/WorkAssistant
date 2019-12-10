@@ -30,16 +30,6 @@ namespace WorkAssistant.Views
             AzureDataStore = new AzureDataStore();
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-        }
-
-        protected virtual void OnModelChanged()
-        {
-
-        }
-
         //async void RegisterTime_Clicked(object sender, EventArgs e)
         //{
         //    viewModel.CreateWorkDayCommand.Execute(null);

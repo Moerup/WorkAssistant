@@ -85,12 +85,12 @@ namespace WorkAssistant.ViewModels
 
         public bool OnCall
         {
-            get { return WorkDay.OnCall; }
+            get { return WorkDay.CalledIn; }
             set
             {
-                if (WorkDay.OnCall != value)
+                if (WorkDay.CalledIn != value)
                 {
-                    WorkDay.OnCall = value;
+                    WorkDay.CalledIn = value;
                     OnPropertyChanged();
                 }
             }
