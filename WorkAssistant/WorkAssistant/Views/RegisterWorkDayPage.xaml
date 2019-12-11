@@ -23,14 +23,14 @@
                            HorizontalOptions="Center"/>
 
                     <DatePicker x:Name="startDatePicker"
-                                Date="{Binding CurrentDate}"
+                                Date="{Binding StartDate}"
                                 Format="D"
                                 Margin="0, 0, 0, 0"
                                 DateSelected="OnStartDateSelected_DateSelected" />
 
                     <StackLayout Orientation="Horizontal">
                         <TimePicker x:Name="startTimePicker"
-                                    Time="{Binding StartTime, Converter={Helpers:DateTimeToTimeSpanConverter}}"
+                                    Time="{Binding StartTime}"
                                     Format="HH:mm"
                                     HorizontalOptions="FillAndExpand" 
                                     PropertyChanged="OnStartTimePicker_PropertyChanged"/>
@@ -54,14 +54,14 @@
                            HorizontalOptions="Center"/>
 
                     <DatePicker x:Name="endDatePicker"
-                                MinimumDate="{Binding Source={x:Reference startDatePicker},Path=Date}"
+                                Date="{Binding EndDate}"
                                 Format="D"
                                 Margin="0, 0, 0, 0"
                                 DateSelected="OnEndDateSelected_DateSelected" />
 
                     <StackLayout Orientation="Horizontal">
                         <TimePicker x:Name="endTimePicker"
-                                    Time="{Binding EndTime, Converter={Helpers:DateTimeToTimeSpanConverter}}"
+                                    Time="{Binding EndTime}"
                                     Format="HH:mm"
                                     HorizontalOptions="FillAndExpand" 
                                     PropertyChanged="OnEndTimePicker_PropertyChanged"/>
@@ -124,6 +124,10 @@
                               VerticalOptions="Center"/>
                 </Grid>
             </Frame>
+
+            <Button x:Name="registerWorkDay"
+                                Clicked="RegisterWorkDayButton_Clicked"
+                                Text="Now" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

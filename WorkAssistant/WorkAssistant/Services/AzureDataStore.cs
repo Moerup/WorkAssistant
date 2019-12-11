@@ -99,12 +99,13 @@ namespace WorkAssistant.Services
             return emptyWorkDay;
         }
 
-        public async Task<IEnumerable<WorkDay>> FilterWorkDays(DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<WorkDay>> FilterWorkDays(string startDate, string endDate)
         {
             if (IsConnected)
             {
-                var json = await client.GetStringAsync($@"api/workday/{startDate}/{endDate}");
-                items = await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<WorkDay>>(json));
+                var response = await client.GetAsync($@"api/workday/{startDate}/{endDate}");
+                var responseConent = await response.Content.ReadAsStringAsync();
+                var items = JsonConvert.DeserializeObject<IEnumerable<WorkDay>>(responseConent);
             }
 
             return items;

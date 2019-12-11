@@ -18,27 +18,57 @@ namespace WorkAssistant.ViewModels
 
         #region Properties Get/Setters
 
-        public DateTime StartTime
+        DateTime _startDate;
+        public DateTime StartDate
         {
-            get { return WorkDay.StartTime; }
+            get { return _startDate; }
             set
             {
-                if (WorkDay.StartTime != value)
+                if (_startDate != value)
                 {
-                    WorkDay.StartTime = value;
+                    _startDate = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        public DateTime EndTime
+        TimeSpan _startTime;
+        public TimeSpan StartTime
         {
-            get { return WorkDay.EndTime; }
+            get { return _startTime; }
             set
             {
-                if (WorkDay.EndTime != value)
+                if (_startTime != value)
                 {
-                    WorkDay.EndTime = value;
+                    _startTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        DateTime _endDate;
+        public DateTime EndDate
+        {
+            get { return _endDate; }
+            set
+            {
+                if (_endDate != value)
+                {
+                    _endDate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        TimeSpan _endTime;
+        public TimeSpan EndTime
+        {
+            get { return _endTime; }
+            set
+            {
+                if (_endTime != value)
+                {
+                    _endTime = value;
                     OnPropertyChanged();
                 }
             }
@@ -112,9 +142,7 @@ namespace WorkAssistant.ViewModels
 
         #endregion
 
-        public Command CheckIfStartedCommand { get; set; }
         public Command CreateWorkDayCommand { get; set; }
-        public Command UpdateWorkDayCommand { get; set; }
 
         public AzureDataStore AzureDataStore;
 
@@ -124,20 +152,43 @@ namespace WorkAssistant.ViewModels
             WorkDay = new WorkDay();
             _currentDate = new DateTime();
             _currentDate = DateTime.Now;
+            _startDate = _currentDate;
+            _endDate = _currentDate;
             AzureDataStore = new AzureDataStore();
-            //CheckIfStartedCommand = new Command(async () => await ExecuteCheckIfStartedCommand());
-            //CreateWorkDayCommand = new Command(async () => await ExecuteCreateWorkDayCommand());
-            //UpdateWorkDayCommand = new Command(async () => await ExecuteUpdateWorkDayCommand());
+            CreateWorkDayCommand = new Command(async () => await ExecuteCreateWorkDayCommand());
 
             MessagingCenter.Subscribe<RegisterWorkDayPage>(this, "StartTimeNowButtonClicked", (sender) =>
             {
-                StartTime = DateTime.Now;
+                StartTime = DateTime.Now.TimeOfDay;
             });
 
             MessagingCenter.Subscribe<RegisterWorkDayPage>(this, "EndTimeNowButtonClicked", (sender) =>
             {
-                EndTime = DateTime.Now;
+                EndTime = DateTime.Now.TimeOfDay;
             });
+        }
+
+        async Task ExecuteCreateWorkDayCommand()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                WorkDay.StartTime = _startDate.Date.Add(_startTime);
+                WorkDay.EndTime = _endDate.Date.Add(_endTime);
+                var registerWorkDaySuccess = await AzureDataStore.CreateWorkDayAsync(WorkDay);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

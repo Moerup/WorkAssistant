@@ -55,6 +55,11 @@ namespace WorkAssistant.Views
             MessagingCenter.Send(this, "StartTimeNowButtonClicked");
         }
 
+        async void RegisterWorkDayButton_Clicked(object sender, EventArgs e)
+        {
+            viewModel.CreateWorkDayCommand.Execute(null);
+        }
+
         private void OnStartDateSelected_DateSelected(object sender, DateChangedEventArgs e)
         {
 

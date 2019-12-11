@@ -38,7 +38,6 @@
                            HorizontalOptions="Center"/>
 
                     <DatePicker x:Name="endDatePicker"
-                                MinimumDate="{Binding Source={x:Reference startDatePicker},Path=Date}"
                                 Date="{Binding EndDate}"
                                 Format="D"
                                 Margin="0, 0, 0, 0" 

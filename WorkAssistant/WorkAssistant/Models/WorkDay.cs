@@ -31,7 +31,7 @@ namespace WorkAssistant.Models
         [JsonProperty(PropertyName = "timeOff")]
         public bool TimeOff { get; set; }
 
-        [JsonProperty(PropertyName = "CalledIn")]
+        [JsonProperty(PropertyName = "calledIn")]
         public bool CalledIn { get; set; }
     }
 }

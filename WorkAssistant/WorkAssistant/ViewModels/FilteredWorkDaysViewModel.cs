@@ -5,6 +5,10 @@ using System.Text;
 using WorkAssistant.Models;
 using WorkAssistant.Services;
 using WorkAssistant.Helpers;
+using Xamarin.Forms;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Linq;
 
 namespace WorkAssistant.ViewModels
 {

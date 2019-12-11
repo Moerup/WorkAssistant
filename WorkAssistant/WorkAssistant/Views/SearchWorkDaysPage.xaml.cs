@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,17 +15,31 @@ namespace WorkAssistant.Views
     public partial class SearchWorkDaysPage : ContentPage
     {
         SearchWorkDaysViewModel viewModel;
+        AzureDataStore AzureDataStore;
         public SearchWorkDaysPage()
         {
             InitializeComponent();
 
+            AzureDataStore = new AzureDataStore();
             BindingContext = viewModel = new SearchWorkDaysViewModel();
         }
 
         async void SearchButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(
-                new NavigationPage(new FilteredWorkDaysPage(viewModel.WorkDays)));
+            try
+            {
+                var workDays = await AzureDataStore.FilterWorkDays(viewModel.StartDate.Date.ToString("yyyy-MM-dd"), viewModel.EndDate.Date.ToString("yyyy-MM-dd"));
+                var workDaysList = workDays.ToList();
+                var filteredWorkDaysViewModel = new FilteredWorkDaysViewModel(workDaysList);
+
+                await Navigation.PushModalAsync(
+                    new NavigationPage(new FilteredWorkDaysPage(filteredWorkDaysViewModel)));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $@"{ex.Message}", "OK");
+                Debug.WriteLine(ex);
+            }
         }
     }
 }
