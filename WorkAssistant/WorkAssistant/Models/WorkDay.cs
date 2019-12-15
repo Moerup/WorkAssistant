@@ -33,5 +33,16 @@ namespace WorkAssistant.Models
 
         [JsonProperty(PropertyName = "calledIn")]
         public bool CalledIn { get; set; }
+
+        public string FormattedDateAndTime
+        {
+            get
+            {
+                var duration = EndTime - StartTime;
+                return string.Format("{0}  |  {1} - {2}  |  {3}", StartTime.ToString("dd MMMM"), 
+                    StartTime.TimeOfDay.ToString("hh\\:mm"), EndTime.TimeOfDay.ToString("hh\\:mm"),
+                    duration.ToString("hh\\:mm"));
+            }
+        }
     }
 }

@@ -6,9 +6,6 @@
              xmlns:Helpers="clr-namespace:WorkAssistant.Helpers"
              mc:Ignorable="d"
              x:Class="WorkAssistant.Views.RegisterWorkDayPage" Title="Register Work Day" >
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Refresh" Clicked="Refresh_Clicked" />
-    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <Frame CornerRadius="10"  
@@ -25,15 +22,13 @@
                     <DatePicker x:Name="startDatePicker"
                                 Date="{Binding StartDate}"
                                 Format="D"
-                                Margin="0, 0, 0, 0"
-                                DateSelected="OnStartDateSelected_DateSelected" />
+                                Margin="0, 0, 0, 0" />
 
                     <StackLayout Orientation="Horizontal">
                         <TimePicker x:Name="startTimePicker"
                                     Time="{Binding StartTime}"
                                     Format="HH:mm"
-                                    HorizontalOptions="FillAndExpand" 
-                                    PropertyChanged="OnStartTimePicker_PropertyChanged"/>
+                                    HorizontalOptions="FillAndExpand" />
 
                         <Button x:Name="currentStartTimeButton" 
                                 Clicked="StartTimeNowButton_Clicked"
@@ -56,15 +51,13 @@
                     <DatePicker x:Name="endDatePicker"
                                 Date="{Binding EndDate}"
                                 Format="D"
-                                Margin="0, 0, 0, 0"
-                                DateSelected="OnEndDateSelected_DateSelected" />
+                                Margin="0, 0, 0, 0"/>
 
                     <StackLayout Orientation="Horizontal">
                         <TimePicker x:Name="endTimePicker"
                                     Time="{Binding EndTime}"
                                     Format="HH:mm"
-                                    HorizontalOptions="FillAndExpand" 
-                                    PropertyChanged="OnEndTimePicker_PropertyChanged"/>
+                                    HorizontalOptions="FillAndExpand" />
 
                         <Button x:Name="currentEndTimeButton"
                                 Clicked="EndTimeNowButton_Clicked"

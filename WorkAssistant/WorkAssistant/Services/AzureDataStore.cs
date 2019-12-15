@@ -105,7 +105,7 @@ namespace WorkAssistant.Services
             {
                 var response = await client.GetAsync($@"api/workday/{startDate}/{endDate}");
                 var responseConent = await response.Content.ReadAsStringAsync();
-                var items = JsonConvert.DeserializeObject<IEnumerable<WorkDay>>(responseConent);
+                items = JsonConvert.DeserializeObject<IEnumerable<WorkDay>>(responseConent);
             }
 
             return items;

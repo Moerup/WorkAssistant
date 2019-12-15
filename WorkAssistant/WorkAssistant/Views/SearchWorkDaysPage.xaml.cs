@@ -28,6 +28,7 @@ namespace WorkAssistant.Views
         {
             try
             {
+                //TODO When searching for workdays, if the search enddate has a workday over midnight it doesn't get included. Fix
                 var workDays = await AzureDataStore.FilterWorkDays(viewModel.StartDate.Date.ToString("yyyy-MM-dd"), viewModel.EndDate.Date.ToString("yyyy-MM-dd"));
                 var workDaysList = workDays.ToList();
                 var filteredWorkDaysViewModel = new FilteredWorkDaysViewModel(workDaysList);

@@ -3,8 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:WorkAssistant.Helpers"
              mc:Ignorable="d"
              x:Class="WorkAssistant.Views.WorkDaysPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:DateTimeToTimeSpanConverter x:Key="timeSpanConvertor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <ListView x:Name="ItemsListView" ItemsSource="{Binding WorkDays}" VerticalOptions="FillAndExpand" HasUnevenRows="true" 
@@ -15,11 +21,13 @@
                         <ViewCell>
                             <StackLayout Padding="10">
                                 
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding StartTime, StringFormat='{0:dd MMMM}'}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="20" />
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding FormattedDateAndTime}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="20" />
+                                    
                                     <Label Text=" - Was out sick" IsVisible="{Binding Sick}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="20" />
                                     <Label Text=" - Working from school" IsVisible="{Binding School}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="20" />
                                     <Label Text=" - Time off work" IsVisible="{Binding TimeOff}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="20" />
+                                    <Label Text=" - Called In" IsVisible="{Binding CalledIn}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="20" />
                                 </StackLayout>
                                 
                             </StackLayout>

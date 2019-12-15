@@ -30,21 +30,6 @@ namespace WorkAssistant.Views
             AzureDataStore = new AzureDataStore();
         }
 
-        //async void RegisterTime_Clicked(object sender, EventArgs e)
-        //{
-        //    viewModel.CreateWorkDayCommand.Execute(null);
-        //}
-
-        //async void RegisterEndTime_Clicked(object sender, EventArgs e)
-        //{
-        //    viewModel.CreateWorkDayCommand.Execute(null);
-        //}
-        
-        async void Refresh_Clicked(object sender, EventArgs e)
-        {
-
-        }
-
         async void EndTimeNowButton_Clicked(object sender, EventArgs e)
         {
             MessagingCenter.Send(this, "EndTimeNowButtonClicked");
@@ -58,26 +43,6 @@ namespace WorkAssistant.Views
         async void RegisterWorkDayButton_Clicked(object sender, EventArgs e)
         {
             viewModel.CreateWorkDayCommand.Execute(null);
-        }
-
-        private void OnStartDateSelected_DateSelected(object sender, DateChangedEventArgs e)
-        {
-
-        }
-
-        private void OnEndDateSelected_DateSelected(object sender, DateChangedEventArgs e)
-        {
-
-        }
-
-        private void OnStartTimePicker_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            
-        }
-
-        private void OnEndTimePicker_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-
         }
     }
 }
