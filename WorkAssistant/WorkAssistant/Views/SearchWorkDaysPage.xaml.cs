@@ -33,8 +33,8 @@ namespace WorkAssistant.Views
                 var workDaysList = workDays.ToList();
                 var filteredWorkDaysViewModel = new FilteredWorkDaysViewModel(workDaysList);
 
-                await Navigation.PushModalAsync(
-                    new NavigationPage(new FilteredWorkDaysPage(filteredWorkDaysViewModel)));
+                await Navigation.PushAsync(
+                    new FilteredWorkDaysPage(filteredWorkDaysViewModel));
             }
             catch (Exception ex)
             {

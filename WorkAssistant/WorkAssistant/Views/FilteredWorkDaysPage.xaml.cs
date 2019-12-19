@@ -21,9 +21,14 @@ namespace WorkAssistant.Views
             BindingContext = viewModel = filteredWorkDaysViewModel;
         }
 
-        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
             //TODO: Create new page for showing stats. Passes the found WorkDays in this viewmodel into the StatsViewModel
+            var workDaysList = viewModel.WorkDays.ToList();
+            var statsViewModel = new StatsViewModel(workDaysList);
+            
+            await Navigation.PushAsync(
+                new StatsPage(statsViewModel));
         }
     }
 }
