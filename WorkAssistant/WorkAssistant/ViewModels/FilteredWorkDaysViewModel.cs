@@ -16,6 +16,15 @@ namespace WorkAssistant.ViewModels
     {
         public ObservableCollection<WorkDay> WorkDays { get; set; }
 
+        public string GetNumberOfWorkDays
+        {
+            get
+            {
+                var workDaysCount = WorkDays.Count().ToString();
+                return string.Format("Found {0} WorkDays", workDaysCount);
+            }
+        }
+
         public FilteredWorkDaysViewModel(List<WorkDay> workDaysList)
         {
             Title = "Filtered result";

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WorkAssistant.Views.StatsPage">
+    <ContentPage.Content>
+        
+        <StackLayout Orientation="Horizontal">
+            
+            <StackLayout Padding="15" HorizontalOptions="CenterAndExpand">
+                <Label Text="Workdays:" Style="{DynamicResource ListItemTextStyle}" FontSize="20" FontAttributes="Bold"/>
+                <Label Text="{Binding GetNumberOfWorkDays}" Style="{DynamicResource ListItemTextStyle}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            </StackLayout>
+
+            <StackLayout Padding="15" HorizontalOptions="CenterAndExpand">
+                <Label Text="Hours:" Style="{DynamicResource ListItemTextStyle}" FontSize="20" FontAttributes="Bold"/>
+                <Label Text="{Binding GetWorkedHours}" Style="{DynamicResource ListItemTextStyle}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            </StackLayout>
+
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>
